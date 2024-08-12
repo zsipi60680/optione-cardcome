@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
+
 const CARDCOM_TERMINAL_NUMBER = process.env.CARDCOM_TERMINAL_NUMBER;
 const CARDCOM_API_NAME = process.env.CARDCOM_API_NAME;
 const CARDCOM_API_PASSWORD = process.env.CARDCOM_API_PASSWORD;
