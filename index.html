@@ -21,18 +21,36 @@
 <body>
     <iframe id="paymentIframe" src="about:blank"></iframe>
     <script>
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        async function createPayment(paymentData) {
+            try {
+                const response = await fetch('/create-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(paymentData)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    // עדכון ה־src של ה־iframe עם כתובת התשלום
+                    document.getElementById('paymentIframe').src = result.paymentUrl;
+                } else {
+                    document.body.innerHTML = 'שגיאה: לא התקבל קישור תשלום.';
+                }
+            } catch (error) {
+                document.body.innerHTML = 'שגיאה: לא ניתן להתחבר לשרת.';
+            }
         }
-        var paymentUrl = getUrlParameter('paymentUrl');
-        if (paymentUrl) {
-            document.getElementById('paymentIframe').src = paymentUrl;
-        } else {
-            document.body.innerHTML = 'שגיאה: לא התקבל קישור תשלום.';
-        }
+
+        // // דוגמה לשליחה עם פרטי תשלום
+        // createPayment({
+        //     transactionId: '12345',
+        //     amount: 100,
+        //     contact: {
+        //         name: 'John Doe',
+        //         email: 'john.doe@example.com'
+        //     }
+        // });
     </script>
 </body>
 </html>

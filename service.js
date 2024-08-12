@@ -1,8 +1,8 @@
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
-
 require('dotenv').config();
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -40,6 +40,7 @@ async function createCardcomPaymentRequest(paymentData) {
         throw error;
     }
 }
+
 app.post('/create-payment', async (req, res) => {
     try {
         const ghlPaymentData = req.body;
@@ -53,11 +54,13 @@ app.post('/create-payment', async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 });
+
 app.post('/cardcom-webhook', (req, res) => {
     const webhookData = req.body;
     console.log('Received webhook from Cardcom:', webhookData);
     res.sendStatus(200);
 });
+
 app.post('/verify-payment', async (req, res) => {
     const { transactionId, chargeId } = req.body;
     res.json({ success: true, message: "Payment verified successfully" });
