@@ -1,15 +1,18 @@
 {
     "builds": [
-      {
-        "src": "service.js",
-        "use": "@vercel/node"
-      }
+        {
+            "src": "service.js",
+            "use": "@vercel/node"
+        }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "service.js"
-      }
+        {
+            "src": "/create-payment",
+            "methods": [
+                "GET",
+                "POST"
+            ],
+            "dest": "service.js"
+        }
     ]
-  }
-  
+}
