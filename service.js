@@ -55,6 +55,33 @@ app.post('/create-payment', async (req, res) => {
     }
 });
 
+app.get('/create-payment', async (req, res) => {
+    try {
+
+        // נתונים בדויים
+        const ghlPaymentData = {
+            "transactionId": "12345",
+            "amount": 5,
+            "contact": {
+              "name": "John Doe",
+              "email": "john.doe@example.com"
+            }
+          };
+          
+        const cardcomResponse =await createCardcomPaymentRequest(ghlPaymentData);
+        res.json({
+            success: true,
+            paymentUrl: cardcomResponse.Url,
+            cardcomTransactionId: cardcomResponse.LowProfileId
+            // paymentUrl: cardcomResponse.LowProfileUrl,
+            // cardcomTransactionId: cardcomResponse.InternalDealNumber
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+
 app.post('/cardcom-webhook', (req, res) => {
     const webhookData = req.body;
     console.log('Received webhook from Cardcom:', webhookData);
@@ -64,6 +91,10 @@ app.post('/cardcom-webhook', (req, res) => {
 app.post('/verify-payment', async (req, res) => {
     const { transactionId, chargeId } = req.body;
     res.json({ success: true, message: "Payment verified successfully" });
+});
+
+app.get('/status', (req, res) => {
+    res.json({ success: true, message: "Server is running!" });
 });
 
 const PORT = process.env.PORT || 3000;
