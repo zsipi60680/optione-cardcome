@@ -2,10 +2,10 @@
     "name": "cardcom-gohighlevel-integration",
     "version": "1.0.0",
     "description": "Integration between Cardcom payment gateway and GoHighLevel CRM",
-    "main": "app/server.js",
+    "main": "app/service.js",
     "scripts": {
-        "start": "node app/server.js",
-        "dev": "nodemon app/server.js"
+        "start": "node app/service.js",
+        "dev": "nodemon app/service.js"
     },
     "dependencies": {
         "axios": "^0.21.4",
