@@ -1,7 +1,7 @@
 {
     "builds": [
         {
-            "src": "service.js",
+            "src": "app/service.js",
             "use": "@vercel/node"
         }
     ],
@@ -12,7 +12,7 @@
                 "GET",
                 "POST"
             ],
-            "dest": "service.js"
+            "dest": "app/service.js"
         }
     ]
 }
